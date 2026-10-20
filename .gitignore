@@ -1,0 +1,25 @@
+# python venv
+venv/
+.venv/
+dbt_project_katherin/.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+
+# creds
+config/database.ini
+
+# dbt stuff
+target/
+dbt_packages/
+logs/
+dbt_project_katherin/target/
+dbt_project_katherin/logs/
+dbt_project_katherin/.user.yml
+dbt_project_katherin/profiles.yml
+dbt_project_october18_Main/profiles.yml
+
+.DS_Store
+Thumbs.db
+.vscode/

@@ -1,0 +1,78 @@
+version: 2
+
+models:
+  - name: stg_categorias
+    description: "Vista staging para normalizar y tipar el catálogo de categorías."
+    columns:
+      - name: id_categoria
+        description: "Llave primaria de la categoría."
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_clima
+    description: "Vista staging con el historial meteorológico diario de Managua."
+    columns:
+      - name: fecha_clima
+        description: "Fecha meteorológica de referencia."
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_detalles
+    description: "Vista staging para las líneas de detalle de cada orden."
+    columns:
+      - name: id_detalle
+        description: "Llave primaria del ítem de detalle."
+        data_tests:
+          - unique
+          - not_null
+      - name: id_orden
+        description: "Llave foránea hacia la orden correspondiente."
+        data_tests:
+          - not_null
+
+  - name: stg_ordenes
+    description: "Vista staging para la cabecera de órdenes y sus marcas temporales."
+    columns:
+      - name: id_orden
+        description: "Llave primaria de la orden."
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_platillos
+    description: "Vista staging con la información técnica y comercial de cada platillo."
+    columns:
+      - name: id_platillo
+        description: "Llave primaria del platillo."
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_promociones
+    description: "Vista staging con el catálogo de campañas de descuento."
+    columns:
+      - name: id_promocion
+        description: "Llave primaria de la promoción."
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_repartidores
+    description: "Vista staging con la plantilla activa de repartidores."
+    columns:
+      - name: id_repartidor
+        description: "Llave primaria del repartidor."
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_zonas
+    description: "Vista staging con las zonas de cobertura y sus métricas de distancia/tiempo base."
+    columns:
+      - name: id_zona
+        description: "Llave primaria de la zona geográfica."
+        data_tests:
+          - unique
+          - not_null

@@ -1,0 +1,95 @@
+version: 2
+
+sources:
+  - name: raw
+    database: raw
+    schema: public
+    description: "Tablas origen extraídas directamente desde los endpoints de la API de Antojitos Express e insertadas en PostgreSQL."
+    tables:
+      - name: categorias_platillo
+        description: "Catálogo de categorías de platillos y porcentaje de margen de contribución."
+        columns:
+          - name: id_categoria
+            description: "Identificador único de la categoría."
+            data_tests:
+              - unique
+              - not_null
+
+      - name: platillos
+        description: "Catálogo de platillos ofrecidos en el menú con costos y tiempos de preparación."
+        columns:
+          - name: id_platillo
+            description: "Identificador único del platillo."
+            data_tests:
+              - unique
+              - not_null
+          - name: id_categoria
+            description: "Llave foránea a categorias_platillo."
+            data_tests:
+              - not_null
+
+      - name: clima_diario
+        description: "Registro meteorológico diario de Managua (precipitación, temperatura y cielo)."
+        columns:
+          - name: fecha
+            description: "Fecha del registro climático."
+            data_tests:
+              - unique
+              - not_null
+
+      - name: zonas
+        description: "Zonas de cobertura de entrega con coordenadas, distancia y tiempo base objetivo."
+        columns:
+          - name: id_zona
+            description: "Identificador único de la zona de entrega."
+            data_tests:
+              - unique
+              - not_null
+
+      - name: repartidores
+        description: "Flota de repartidores, su vehículo, calificación y capacidad máxima de órdenes."
+        columns:
+          - name: id_repartidor
+            description: "Identificador único del repartidor."
+            data_tests:
+              - unique
+              - not_null
+
+      - name: promociones
+        description: "Campañas de marketing, costo presupuestado, retorno y porcentaje de descuento."
+        columns:
+          - name: id_promocion
+            description: "Identificador único de la promoción."
+            data_tests:
+              - unique
+              - not_null
+
+      - name: ordenes
+        description: "Cabecera transaccional de órdenes de delivery realizadas por los clientes."
+        columns:
+          - name: id_orden
+            description: "Identificador único de la orden."
+            data_tests:
+              - unique
+              - not_null
+          - name: id_zona
+            description: "Identificador de la zona asociada a la entrega."
+            data_tests:
+              - not_null
+
+      - name: detalle_ordenes
+        description: "Líneas de detalle con los platillos y cantidades solicitadas en cada orden."
+        columns:
+          - name: id_detalle
+            description: "Identificador único de la línea de detalle."
+            data_tests:
+              - unique
+              - not_null
+          - name: id_orden
+            description: "Identificador de la orden a la que pertenece este detalle."
+            data_tests:
+              - not_null
+          - name: id_platillo
+            description: "Identificador del platillo pedido."
+            data_tests:
+              - not_null

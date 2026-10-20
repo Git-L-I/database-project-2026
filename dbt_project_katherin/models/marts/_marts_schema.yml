@@ -1,0 +1,191 @@
+version: 2
+
+models:
+  - name: dim_platillos
+    description: "Dimensión del menú de platillos con categoría asociada, costos, tiempos de preparación y márgenes calculados."
+    columns:
+      - name: id_platillo
+        description: "Identificador único de cada platillo."
+        data_tests:
+          - unique
+          - not_null
+      - name: id_categoria
+        description: "Identificador de la categoría a la que pertenece el platillo."
+        data_tests:
+          - not_null
+      - name: nombre_platillo
+        description: "Nombre del platillo ofrecido en el menú."
+      - name: precio_unitario
+        description: "Precio de venta al público en moneda local."
+      - name: costo_ingredientes
+        description: "Costo unitario directo de insumos e ingredientes."
+      - name: margen_bruto_unitario
+        description: "Ganancia bruta por platillo (precio_unitario - costo_ingredientes)."
+
+  - name: dim_repartidores
+    description: "Dimensión de la flota de repartidores con vehículo, capacidad y desempeño."
+    columns:
+      - name: id_repartidor
+        description: "Identificador único de cada repartidor."
+        data_tests:
+          - unique
+          - not_null
+      - name: nombre
+        description: "Nombre completo del repartidor."
+      - name: tipo_vehiculo
+        description: "Tipo de transporte utilizado (moto, bicicleta, etc.)."
+      - name: calificacion_promedio
+        description: "Puntuación promedio del repartidor otorgada por los clientes."
+      - name: capacidad_maxima_ordenes
+        description: "Límite operativo de órdenes simultáneas que puede trasladar."
+      - name: estado
+        description: "Estado operativo del repartidor (activo, inactivo, descanso)."
+
+  - name: dim_zonas
+    description: "Dimensión geográfica de cobertura de entrega en Managua con distancias y tiempos objetivo."
+    columns:
+      - name: id_zona
+        description: "Identificador único de cada zona."
+        data_tests:
+          - unique
+          - not_null
+      - name: nombre_zona
+        description: "Nombre de la zona o barrio de cobertura."
+      - name: distancia_km
+        description: "Distancia promedio en kilómetros desde la cocina fantasma."
+      - name: tiempo_base_minutos
+        description: "Tiempo base objetivo estimado de entrega para la zona."
+      - name: tarifa_envio_base
+        description: "Costo base fijado para el envío hacia esta zona."
+
+  - name: dim_promociones
+    description: "Dimensión de campañas promocionales, costos de marketing y porcentaje de descuento."
+    columns:
+      - name: id_promocion
+        description: "Identificador único de cada promoción."
+        data_tests:
+          - unique
+          - not_null
+      - name: nombre_campana
+        description: "Nombre identificador de la campaña de descuento o promoción."
+      - name: descuento_pct
+        description: "Porcentaje de descuento aplicado sobre la orden."
+
+  - name: fct_ordenes
+    description: "Tabla de hechos a nivel de orden con tiempos de entrega, clima, retraso contra objetivo y agregaciones financieras."
+    columns:
+      - name: id_orden
+        description: "Identificador único de cada orden transaccional."
+        data_tests:
+          - unique
+          - not_null
+
+      - name: id_zona
+        description: "Identificador de la zona de destino de la entrega."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_zonas')
+                field: id_zona
+
+      - name: id_repartidor
+        description: "Identificador del repartidor asignado a la entrega."
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_repartidores')
+                field: id_repartidor
+
+      - name: id_promocion
+        description: "Identificador de la promoción aplicada a la orden, si corresponde."
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_promociones')
+                field: id_promocion
+
+      - name: estado_orden
+        description: "Estado de la orden (entregada, cancelada, en_camino, preparando)."
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['entregada', 'cancelada', 'en_camino', 'preparando']
+
+      - name: metodo_pago
+        description: "Método de pago empleado por el cliente."
+        data_tests:
+          - not_null
+
+      - name: tiempo_entrega_minutos
+        description: "Tiempo transcurrido en minutos entre la creación y la entrega."
+
+      - name: minutos_retraso
+        description: "Diferencia entre el tiempo real de entrega y el tiempo base objetivo de la zona."
+
+      - name: es_entrega_retrasada
+        description: "Booleano que indica si la entrega excedió el tiempo base objetivo."
+
+      - name: tipo_horario
+        description: "Segmentación horaria de demanda: 'Hora de Mayor Demanda' vs 'Fuera de Pico'."
+
+      - name: es_hora_pico
+        description: "Booleano que indica si la orden se originó durante picos de almuerzo o cena."
+
+      - name: cantidad_detalles
+        description: "Cantidad de ítems o líneas distintas de detalle en la orden."
+
+      - name: cantidad_total_platillos
+        description: "Número total de unidades de platillos ordenados."
+
+      - name: costo_total_ingredientes_orden
+        description: "Costo total agregado de insumos de cocina para la orden."
+
+      - name: ganancia_bruta_orden
+        description: "Margen de ganancia bruta generada por la orden (subtotal - costo ingredientes)."
+
+  - name: fct_detalles_orden
+    description: "Tabla de hechos a nivel de ítem/línea de detalle de orden, permitiendo análisis unitario por platillo."
+    columns:
+      - name: id_detalle
+        description: "Identificador único de cada línea de detalle de orden."
+        data_tests:
+          - unique
+          - not_null
+
+      - name: id_orden
+        description: "Identificador de la orden a la que pertenece el detalle."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_ordenes')
+                field: id_orden
+
+      - name: id_platillo
+        description: "Identificador del platillo incluido en el detalle."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_platillos')
+                field: id_platillo
+
+      - name: cantidad
+        description: "Unidades del platillo solicitadas en esta línea."
+        data_tests:
+          - not_null
+
+      - name: precio_unitario_item
+        description: "Precio unitario pactado para el ítem."
+        data_tests:
+          - not_null
+
+      - name: subtotal_item
+        description: "Monto subtotal de la línea (cantidad * precio_unitario)."
+        data_tests:
+          - not_null
+
+      - name: ganancia_bruta_item
+        description: "Ganancia bruta generada por esta línea de detalle."

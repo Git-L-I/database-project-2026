@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: dim_platillos
+    columns:
+      - name: id_platillo
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_repartidores
+    columns:
+      - name: id_repartidor
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_zonas
+    columns:
+      - name: id_zona
+        tests:
+          - unique
+          - not_null
+
+  - name: fct_ordenes
+    columns:
+      - name: id_orden
+        tests:
+          # - unique
+          - not_null
+      - name: id_zona
+        tests:
+          - relationships:
+              to: ref('dim_zonas')
+              field: id_zona
+
+  - name: fct_order_items
+    columns:
+      - name: id_detalle
+        tests:
+          - unique
+          - not_null
+      - name: id_orden
+        tests:
+          - relationships:
+              to: ref('fct_ordenes')
+              field: id_orden

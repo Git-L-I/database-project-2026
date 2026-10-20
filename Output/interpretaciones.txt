@@ -1,0 +1,14 @@
+Bar Plot: tiempo de entrega promedio y tiempo de entrega base:
+El estudio se ve justificado en este grafico, no hay ninguna zona que este cumpliendo con las expectativas, Zonas geograficamente extensas como Carretera Sur y Santo Domingo sufren de las mayores duraciones de demora. La diferecia entre el tiempo de entrega base y el promedio es claramente consistente, esto nos sugiere que quizas el restaurante fantasma ha subestimado los tiempos de entrega base entre otros problemas que requieren de optimizacion de las rutas de repartidores.
+
+Regresion Linear Simple: Lluvia y Tiempo de entrega/delivery
+-Por cada 10 mm de incremento en precipitacion, el tiempo de delivery esperado incrementa por alrededor de 7.1 minutos. Bajo lluvia alta, las duraciones de el tiempo incrementan significativamente, validando que ajustes son necesarios en base al clima.
+
+Regresion Lineal Multiple: Prediccion de Tiempo de Entrega.
+Aunque factores como la precipitation, costo de envio, y cantidad (que son evaluados en este grafico) son relevantes y establecen una base, ellos por su propia cuenta no pueden capturar las demoras extremas. Esto justifica fuertemente el enfoque del projecto en aspectos como cuellos de botella en la preparacion en cocina.
+
+Prueba de Hipotesis para la Meida:
+La curva Roja (horas de mayor demanda) y la azul (fuera del pico) trazan casi exactamente el mismo camino. Estatisticamente, no hay diferencia significativa entre la media de tiempos de entrega de horas pico y horas fuera del pico. (El valor de p es mayor a 0.05, es 0.237, la hipotesis nula falla)
+
+Programacion Linear: Asignacion de Repartidores y demanda de zona:
+se muestra el volumen por zona contra una asignacion proporcional optimizada de 25 repartidores. Zonas como Los Robles y Altamira presentan la mayor parte de demanda, requieren de alrededor de 3 repartidores para mantener tiempos de respuesta optimos. Sugiere mover los recursos de entrega de zonas de baja demanda a un enfoque en zonas de alta densidad comercial para minimizar las demoras

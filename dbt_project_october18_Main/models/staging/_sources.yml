@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: raw
+    database: raw
+    schema: public
+    tables:
+      - name: categorias_platillo
+      - name: platillos
+      - name: clima_diario
+      - name: zonas
+      - name: ordenes
+      - name: repartidores
+      - name: promociones
+      - name: detalle_ordenes
