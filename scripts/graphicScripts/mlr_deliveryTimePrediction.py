@@ -33,7 +33,7 @@ def generate_mlr_prediction():
         precipitacion_mm,
         costo_envio,
         cantidad
-    from analyticsMain_marts.fct_ordenes
+    from "analyticsMain_marts"."fct_ordenes"
     where tiempo_entrega_minutos is not null
       and precipitacion_mm is not null
       and costo_envio is not null

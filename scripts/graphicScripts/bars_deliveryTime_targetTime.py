@@ -29,8 +29,8 @@ def generate_bars_delivery_target():
         z.nombre_zona,
         z.tiempo_base_minutos,
         round(avg(o.tiempo_entrega_minutos)::numeric, 2) as avg_tiempo_entrega
-    from analyticsMain_marts.fct_ordenes o
-    join analyticsMain_marts.dim_zonas z on o.id_zona = z.id_zona
+    from "analyticsMain_marts"."fct_ordenes" o
+    join "analyticsMain_marts".dim_zonas z on o.id_zona = z.id_zona
     where o.estado_orden = 'entregada'
     group by z.nombre_zona, z.tiempo_base_minutos
     order by avg_tiempo_entrega desc;

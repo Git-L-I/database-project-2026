@@ -34,7 +34,7 @@ def generate_htm_delivery_times():
             then 'Hora de Mayor Demanda' 
             else 'Fuera de Pico' 
         end as tipo_horario
-    from analyticsMain_marts.fct_ordenes
+    from "analyticsMain_marts"."fct_ordenes"
     where tiempo_entrega_minutos is not null
       and estado_orden = 'entregada';
     """

@@ -27,8 +27,8 @@ def generate_lp_allocation():
     select 
         z.nombre_zona,
         count(o.id_orden) as total_ordenes
-    from analyticsMain_marts.fct_ordenes o
-    join analyticsMain_marts.dim_zonas z on o.id_zona = z.id_zona
+    from "analyticsMain_marts"."fct_ordenes" o
+    join "analyticsMain_marts".dim_zonas z on o.id_zona = z.id_zona
     group by z.nombre_zona
     order by total_ordenes desc;
     """

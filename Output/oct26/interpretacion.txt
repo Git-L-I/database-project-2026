@@ -1,0 +1,8 @@
+ordenes mas populares:
+Los puestos muestran que aquellas comidas y bebidas tradicionales dominan el volumen de las ventas. la informacion es util para manejo de inventario, estrategias promocionales y tomas de decisiones.
+
+demanda por zona:
+"Los robles" es la zona de mayor demanda a como se puede ver en el grapfico y "carretera sur" presenta el menor volumen de las areas listadas. El grafico es vital para logisticas, estrategias de asignacion de flota y logistica
+
+distribucion de orden por horario:
+el grafico revela un pico dual tipico de un incremento a las horas de el almuerzo y la cena, con los maximos puntos siendo a las 12:00 AM y las 7:00 PM respectivamente, ambas con aprox. mas de 14,000 ordenes. el grafico proporciona informacion importante y valiosa para la planeacion de operaciones, asignacion de el personal de cocina y programacion de horarios para los repartidores.

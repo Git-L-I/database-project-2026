@@ -33,7 +33,7 @@ def generate_correlation_matrix():
         propina,
         precipitacion_mm,
         temperatura_c
-    from analyticsMain_marts.fct_ordenes;
+    from "analyticsMain_marts"."fct_ordenes";
     """
     
     df = pd.read_sql(query, engine)

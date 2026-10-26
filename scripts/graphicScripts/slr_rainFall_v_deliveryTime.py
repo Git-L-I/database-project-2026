@@ -25,7 +25,7 @@ def generate_slr_rain_delivery():
     select 
         precipitacion_mm,
         tiempo_entrega_minutos
-    from analyticsMain_marts.fct_ordenes
+    from "analyticsMain_marts"."fct_ordenes"
     where precipitacion_mm is not null 
       and tiempo_entrega_minutos is not null
       and estado_orden = 'entregada';
