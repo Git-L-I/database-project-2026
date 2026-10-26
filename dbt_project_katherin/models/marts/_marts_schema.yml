@@ -1,3 +1,4 @@
+
 version: 2
 
 models:
@@ -72,7 +73,7 @@ models:
         description: "Porcentaje de descuento aplicado sobre la orden."
 
   - name: fct_ordenes
-    description: "Tabla de hechos a nivel de orden con tiempos de entrega, clima, retraso contra objetivo y agregaciones financieras."
+    description: "Tabla de hechos a nivel de orden con tiempos de entrega, clima, retraso contra objetivo, agregaciones financieras y detalles de los platillos."
     columns:
       - name: id_orden
         description: "Identificador único de cada orden transaccional."
@@ -144,48 +145,3 @@ models:
 
       - name: ganancia_bruta_orden
         description: "Margen de ganancia bruta generada por la orden (subtotal - costo ingredientes)."
-
-  - name: fct_detalles_orden
-    description: "Tabla de hechos a nivel de ítem/línea de detalle de orden, permitiendo análisis unitario por platillo."
-    columns:
-      - name: id_detalle
-        description: "Identificador único de cada línea de detalle de orden."
-        data_tests:
-          - unique
-          - not_null
-
-      - name: id_orden
-        description: "Identificador de la orden a la que pertenece el detalle."
-        data_tests:
-          - not_null
-          - relationships:
-              arguments:
-                to: ref('fct_ordenes')
-                field: id_orden
-
-      - name: id_platillo
-        description: "Identificador del platillo incluido en el detalle."
-        data_tests:
-          - not_null
-          - relationships:
-              arguments:
-                to: ref('dim_platillos')
-                field: id_platillo
-
-      - name: cantidad
-        description: "Unidades del platillo solicitadas en esta línea."
-        data_tests:
-          - not_null
-
-      - name: precio_unitario_item
-        description: "Precio unitario pactado para el ítem."
-        data_tests:
-          - not_null
-
-      - name: subtotal_item
-        description: "Monto subtotal de la línea (cantidad * precio_unitario)."
-        data_tests:
-          - not_null
-
-      - name: ganancia_bruta_item
-        description: "Ganancia bruta generada por esta línea de detalle."
